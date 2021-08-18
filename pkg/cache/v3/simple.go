@@ -323,7 +323,7 @@ func (cache *snapshotCache) CreateWatch(request *Request) (chan Response, func()
 
 	// otherwise, the watch may be responded immediately
 	resources := snapshot.GetResourcesAndTtl(request.TypeUrl)
-	fmt.Println("resources:", len(resources))
+	fmt.Println("resources 1:", resources)
 	cache.respond(request, value, resources, version, false)
 
 	return value, nil
@@ -364,6 +364,7 @@ func (cache *snapshotCache) respond(request *Request, value chan Response, resou
 		cache.log.Debugf("respond %s%v version %q with version %q",
 			request.TypeUrl, request.ResourceNames, request.VersionInfo, version)
 	}
+	fmt.Println("resources 2:", resources)
 	response := createResponse(request, resources, version, heartbeat)
 	fmt.Println("*******", response)
 	value <- response
@@ -378,6 +379,7 @@ func createResponse(request *Request, resources map[string]types.ResourceWithTtl
 	if len(request.ResourceNames) != 0 {
 		set := nameSet(request.ResourceNames)
 		for name, resource := range resources {
+			fmt.Println("request.ResourceNames: ", request.ResourceNames, " name: ", name)
 			if set[name] {
 				filtered = append(filtered, resource)
 			}
@@ -387,6 +389,8 @@ func createResponse(request *Request, resources map[string]types.ResourceWithTtl
 			filtered = append(filtered, resource)
 		}
 	}
+
+	fmt.Println("filtered resources 2:", filtered)
 
 	return &RawResponse{
 		Request:   request,
