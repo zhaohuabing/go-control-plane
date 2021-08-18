@@ -16,6 +16,7 @@
 package sotw
 
 import (
+	"fmt"
 	"context"
 	"errors"
 	"strconv"
@@ -269,6 +270,7 @@ func (s *server) process(stream Stream, reqCh <-chan *discovery.DiscoveryRequest
 			}
 
 		case req, more := <-reqCh:
+			fmt.Println("handle a request.....");
 			// input stream ended or errored out
 			if !more {
 				return nil
@@ -398,6 +400,7 @@ func (s *server) StreamHandler(stream Stream, typeURL string) error {
 		defer close(reqCh)
 		for {
 			req, err := stream.Recv()
+			fmt.Println("receive a request.....");
 			if err != nil {
 				return
 			}
