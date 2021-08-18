@@ -376,10 +376,11 @@ func createResponse(request *Request, resources map[string]types.ResourceWithTtl
 	// Reply only with the requested resources. Envoy may ask each resource
 	// individually in a separate stream. It is ok to reply with the same version
 	// on separate streams since requests do not share their response versions.
+	fmt.Println("resources 3:", resources)
 	if len(request.ResourceNames) != 0 {
 		set := nameSet(request.ResourceNames)
 		for name, resource := range resources {
-			fmt.Println("request.ResourceNames: ", request.ResourceNames, " name: ", name)
+			fmt.Println("request.ResourceNames: ", request.ResourceNames, " name: ", name, "resource: ",resource)
 			if set[name] {
 				filtered = append(filtered, resource)
 			}
