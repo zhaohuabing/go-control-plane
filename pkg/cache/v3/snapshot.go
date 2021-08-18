@@ -211,6 +211,8 @@ func (s *Snapshot) GetResourcesAndTtl(typeURL string) map[string]types.ResourceW
 	if typ == types.UnknownType {
 		return nil
 	}
+
+	fmt.Println("****:s.Resources[typ].Items", s.Resources[typ].Items)
 	return s.Resources[typ].Items
 }
 
