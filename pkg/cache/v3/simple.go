@@ -304,7 +304,8 @@ func (cache *snapshotCache) CreateWatch(request *Request) (chan Response, func()
 
 	snapshot, exists := cache.snapshots[nodeID]
 	version := snapshot.GetVersion(request.TypeUrl)
-
+    fmt.Print("exists:", exists,"request.VersionInfo:",request.VersionInfo,"version",version)
+	
 	// if the requested version is up-to-date or missing a response, leave an open watch
 	if !exists || request.VersionInfo == version {
 		watchID := cache.nextWatchID()
@@ -320,6 +321,7 @@ func (cache *snapshotCache) CreateWatch(request *Request) (chan Response, func()
 
 	// otherwise, the watch may be responded immediately
 	resources := snapshot.GetResourcesAndTtl(request.TypeUrl)
+	fmt.Print("resources:", len(resources))
 	cache.respond(request, value, resources, version, false)
 
 	return value, nil
