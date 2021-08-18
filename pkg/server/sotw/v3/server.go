@@ -217,6 +217,7 @@ func (s *server) process(stream Stream, reqCh <-chan *discovery.DiscoveryRequest
 			values.clusterNonce = nonce
 
 		case resp, more := <-values.routes:
+			fmt.Println("send resp:",resp);
 			if !more {
 				return status.Errorf(codes.Unavailable, "routes watch failed")
 			}
@@ -289,7 +290,7 @@ func (s *server) process(stream Stream, reqCh <-chan *discovery.DiscoveryRequest
 
 			// nonces can be reused across streams; we verify nonce only if nonce is not initialized
 			nonce := req.GetResponseNonce()
-
+			fmt.Println("handle a request nonce:",nonce);
 			// type URL is required for ADS but is implicit for xDS
 			if defaultTypeURL == resource.AnyType {
 				if req.TypeUrl == "" {
@@ -322,6 +323,7 @@ func (s *server) process(stream Stream, reqCh <-chan *discovery.DiscoveryRequest
 					values.clusters, values.clusterCancel = s.cache.CreateWatch(req)
 				}
 			case req.TypeUrl == resource.RouteType:
+				fmt.Println("handle Route:");
 				if values.routeNonce == "" || values.routeNonce == nonce {
 					if values.routeCancel != nil {
 						values.routeCancel()
