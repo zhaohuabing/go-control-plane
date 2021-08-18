@@ -187,7 +187,7 @@ func (r *RawResponse) GetDiscoveryResponse() (*discovery.DiscoveryResponse, erro
 	if marshaledResponse == nil {
 
 		marshaledResources := make([]*any.Any, len(r.Resources))
-
+		fmt.Println("resource.... ",resource)
 		for i, resource := range r.Resources {
 			maybeTtldResource, resourceType, err := ttl.MaybeCreateTtlResourceIfSupported(resource, GetResourceName(resource.Resource), r.Request.TypeUrl, r.Heartbeat)
 			if err != nil {
