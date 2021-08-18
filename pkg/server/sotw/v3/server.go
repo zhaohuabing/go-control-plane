@@ -329,6 +329,8 @@ func (s *server) process(stream Stream, reqCh <-chan *discovery.DiscoveryRequest
 						values.routeCancel()
 					}
 					values.routes, values.routeCancel = s.cache.CreateWatch(req)
+					fmt.Println("values.routes:",values.routes);
+					fmt.Println("values.routeCancel:",values.routeCancel);
 				}
 			case req.TypeUrl == resource.ListenerType:
 				if values.listenerNonce == "" || values.listenerNonce == nonce {
