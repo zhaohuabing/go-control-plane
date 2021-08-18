@@ -32,6 +32,7 @@ import (
 	"github.com/envoyproxy/go-control-plane/pkg/cache/types"
 	"github.com/envoyproxy/go-control-plane/pkg/resource/v3"
 	"github.com/envoyproxy/go-control-plane/pkg/wellknown"
+	metaRoute "github.com/aeraki-framework/go-control-plane/api/v1alpha"
 )
 
 // GetResponseType returns the enumeration for a valid xDS type URL
@@ -94,6 +95,8 @@ func GetResourceName(res types.Resource) string {
 		return v.GetName()
 	case *core.TypedExtensionConfig:
 		// This is a V3 proto, but this is the easiest workaround for the fact that there is no V2 proto.
+		return v.GetName()
+	case *metaRoute.RouteConfiguration:
 		return v.GetName()
 	default:
 		return ""
