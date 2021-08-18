@@ -273,12 +273,13 @@ func (s *server) process(stream Stream, reqCh <-chan *discovery.DiscoveryRequest
 			fmt.Println("handle a request.....");
 			// input stream ended or errored out
 			if !more {
+				fmt.Println("no request ...");
 				return nil
 			}
 			if req == nil {
 				return status.Errorf(codes.Unavailable, "empty request")
 			}
-
+			fmt.Println("handle a request 1.....");
 			// node field in discovery request is delta-compressed
 			if req.Node != nil {
 				node = req.Node
