@@ -308,9 +308,9 @@ func (cache *snapshotCache) CreateWatch(request *Request) (chan Response, func()
 	
 	// if the requested version is up-to-date or missing a response, leave an open watch
 	if !exists || request.VersionInfo == version {
+		watchID := cache.nextWatchID()
 		fmt.Println("open watch %d for %s%v from nodeID %q, version %q", watchID,
 			request.TypeUrl, request.ResourceNames, nodeID, request.VersionInfo)
-		watchID := cache.nextWatchID()
 		if cache.log != nil {
 			cache.log.Debugf("open watch %d for %s%v from nodeID %q, version %q", watchID,
 				request.TypeUrl, request.ResourceNames, nodeID, request.VersionInfo)
