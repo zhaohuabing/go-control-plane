@@ -364,7 +364,7 @@ func (cache *snapshotCache) respond(request *Request, value chan Response, resou
 		cache.log.Debugf("respond %s%v version %q with version %q",
 			request.TypeUrl, request.ResourceNames, request.VersionInfo, version)
 	}
-	response = createResponse(request, resources, version, heartbeat)
+	response := createResponse(request, resources, version, heartbeat)
 	fmt.Println("*******", response)
 	value <- response
 }
